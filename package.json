@@ -16,5 +16,10 @@
   ],
   "dependencies": {
     "yeoman-generator": "^3.2.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/malexsan1/hindawi-generator.git"
+  },
+  "license": "MIT"
 }
