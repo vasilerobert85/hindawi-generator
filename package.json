@@ -1,19 +1,22 @@
 {
   "name": "generator-hindawi",
-  "version": "0.0.8",
+  "version": "0.0.11",
   "author": {
     "email": "alexandru.munt@gmail.com",
     "name": "malexsan1",
     "url": "https://github.com/malexsan1"
   },
-  "main": "generators/app/index.js",
   "description": "A yeoman generator for Hindawi peer review project.",
+  "main": "app/index.js",
   "keywords": [
     "yeoman-generator"
   ],
   "dependencies": {
     "yeoman-generator": "^3.2.0"
   },
+  "files": [
+    "app"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/malexsan1/hindawi-generator.git"
