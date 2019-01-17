@@ -4,9 +4,7 @@
   "version": "<%= projectVersion %>",
   "license": "MIT",
   "author": "Collaborative Knowledge Foundation",
-  "files": [
-    "src"
-  ],
+  "main": "index.js",
   "scripts": {
     "test": "jest"
   },
