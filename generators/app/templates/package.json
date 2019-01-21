@@ -3,7 +3,7 @@
   "description": "<%= description %>",
   "version": "<%= projectVersion %>",
   "license": "MIT",
-  "author": "Collaborative Knowledge Foundation",
+  "author": "Hindawi Limited",
   "main": "index.js",
   "scripts": {
     "test": "jest"
@@ -29,8 +29,10 @@
     "jest": "^22.1.1"
   },
   "jest": {
-    "verbose": true,
-    "testRegex": "/**/.*.test.js$",
+    "verbose": false,
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
     "testURL": "http://localhost/"
   },
   "publishConfig": {

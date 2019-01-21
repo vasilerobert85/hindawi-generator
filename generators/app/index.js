@@ -49,7 +49,7 @@ module.exports = class extends Generator {
       },
     )
 
-    // createa the package index
+    // create the package index
     this.fs.copy(
       this.templatePath('index.js'),
       this.destinationPath(`packages/component-${this.componentName}/index.js`),
