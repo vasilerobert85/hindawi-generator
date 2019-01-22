@@ -1,5 +1,5 @@
 {
-  "name": "<%= componentName %>",
+  "name": "component-<%= componentName %>",
   "description": "<%= description %>",
   "version": "<%= projectVersion %>",
   "license": "MIT",
@@ -22,18 +22,33 @@
     "react-apollo": "^2.3.3",
     "react-dom": "^16.7.0",
     "recompose": "^0.30.0",
-    "styled-components": "^4.1.3",
-    "xpub-journal": "^0.0.6"
+    "styled-components": "^4.1.3"
   },
   "devDependencies": {
-    "jest": "^22.1.1"
+    "babel-jest": "^23.6.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
+    "identity-obj-proxy": "^3.0.0",
+    "jest-styled-components": "^6.3.1",
+    "react-test-renderer": "^16.7.0"
   },
   "jest": {
+    "rootDir": "../..",
     "verbose": false,
     "testMatch": [
-      "**/tests/**/*.test.js"
+      "<rootDir>/packages/component-<%= componentName %>/**/tests/**/*.test.js"
     ],
-    "testURL": "http://localhost/"
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@pubsweet|xpub-journal|xpub-validators)/)"
+    ],
+    "testURL": "http://localhost/",
+    "setupTestFrameworkScriptFile": "./packages/component-<%= componentName %>/config/jest-setup.js",
+    "transform": {
+      "\\.js$": "babel-jest"
+    },
+    "moduleNameMapper": {
+      "\\.s?css$": "identity-obj-proxy"
+    }
   },
   "publishConfig": {
     "access": "public"

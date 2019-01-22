@@ -36,6 +36,12 @@ module.exports = class extends Generator {
       this.destinationPath(`packages/component-${this.componentName}/server`),
     )
 
+    // create the config file structure
+    this.fs.copy(
+      this.templatePath('config'),
+      this.destinationPath(`packages/component-${this.componentName}/config`),
+    )
+
     // create the package.json
     this.fs.copyTpl(
       this.templatePath('package.json'),

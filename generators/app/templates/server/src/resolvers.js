@@ -9,7 +9,7 @@ const resolvers = {
   Query: {},
   Mutation: {
     async mutationCodeHere(_, { input }, ctx) {
-      return useCases.mutationCodeHere
+      return useCases.placeholderUseCase
         .initialize({ logger, models, services })
         .execute(input)
     },

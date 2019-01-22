@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 import { graphql } from 'react-apollo'
 import { compose } from 'recompose'
 
