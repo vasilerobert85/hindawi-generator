@@ -1,7 +1,12 @@
-const typeDefs = require('./server/src/typeDefs')
+const fs = require('fs')
+const path = require('path')
+
 const resolvers = require('./server/src/resolvers')
 
 module.exports = {
   resolvers,
-  typeDefs,
+  typeDefs: fs.readFileSync(
+    path.join(__dirname, '/server/src/typeDefs'),
+    'utf8',
+  ),
 }
