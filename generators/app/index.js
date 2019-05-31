@@ -51,6 +51,13 @@ module.exports = class extends Generator {
           required: true,
           message: 'What is the microservice supposed to do? (e.g. service used to convert files)',
         },
+        {
+          type: 'input',
+          name: 'dependencies',
+          required: false,
+          message: 'Does this service depend on other services? (add comma separated values)',
+          filter: values => (values ? values.split(', ') : undefined),
+        },
       ])
     }
 
@@ -59,7 +66,7 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    const { packageName, description } = this.answers
+    const { packageName, description, dependencies } = this.answers
     if (this.packageType === GENERATOR_TYPES.component) {
       this.fs.copy(
         this.templatePath('package/client'),
@@ -90,16 +97,55 @@ module.exports = class extends Generator {
         this.templatePath('package/index.js'),
         this.destinationPath(`packages/component-${packageName}/index.js`),
       )
+    } else {
+      this.fs.copy(
+        this.templatePath('microservice/src'),
+        this.destinationPath(`packages/service-${packageName}/src`),
+      )
+
+      this.fs.copy(
+        this.templatePath('microservice/Dockerfile'),
+        this.destinationPath(`packages/service-${packageName}/Dockerfile`),
+      )
+
+      this.fs.copy(
+        this.templatePath('microservice/.env'),
+        this.destinationPath(`packages/service-${packageName}/.env`),
+      )
+
+      this.fs.copyTpl(
+        this.templatePath('microservice/package.json'),
+        this.destinationPath(`packages/service-${packageName}/package.json`),
+        {
+          description,
+          projectVersion: '0.0.1',
+          serviceName: packageName,
+        },
+      )
+
+      this.fs.copyTpl(
+        this.templatePath('microservice/Docker-compose.yml'),
+        this.destinationPath(`packages/service-${packageName}/Docker-compose.yml`),
+        {
+          dependencies,
+          serviceName: packageName,
+        },
+      )
+
+      this.fs.copy(
+        this.templatePath('microservice/index.js'),
+        this.destinationPath(`packages/service-${packageName}/index.js`),
+      )
     }
   }
 
   install() {
-    // this.installDependencies({
-    //   npm: false,
-    //   bower: false,
-    //   yarn: true
-    // })
-
-    console.log('aici ar trebui sa vina isntall')
+    if (this.packageType === GENERATOR_TYPES.component) {
+      this.installDependencies({
+        npm: false,
+        bower: false,
+        yarn: true,
+      })
+    }
   }
 }

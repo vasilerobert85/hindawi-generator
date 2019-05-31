@@ -1,0 +1,18 @@
+{
+  "name": "service-<%= serviceName%>",
+  "description": "<%= description %>",
+  "version": "<%= projectVersion %>",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "lodash": "^4.17.11"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}

@@ -33,17 +33,19 @@
   },
   "jest": {
     "rootDir": "../..",
-    "verbose": false,
+    "verbose": true,
     "testMatch": [
       "<rootDir>/packages/component-<%= componentName %>/**/tests/**/*.test.js"
+    ],
+    "setupFilesAfterEnv": [
+      "./packages/component-<%= componentName %>/config/jest-setup.js"
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!(@pubsweet|xpub-journal|xpub-validators)/)"
     ],
     "testURL": "http://localhost/",
-    "setupTestFrameworkScriptFile": "./packages/component-<%= componentName %>/config/jest-setup.js",
     "transform": {
-      "\\.js$": "babel-jest"
+      "^.+\\.js$": "<rootDir>/packages/component-<%= componentName %>/config/jest-transform.js"
     },
     "moduleNameMapper": {
       "\\.s?css$": "identity-obj-proxy"

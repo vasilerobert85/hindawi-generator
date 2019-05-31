@@ -1,0 +1,19 @@
+# Copy this generated service and add it to the main Docker-compose.yml file
+
+service-<%= serviceName%>:
+  build:
+    context: ../../
+    dockerfile: ./packages/service-<%= serviceName%>/Dockerfile
+  command: sh -c "cd packages/service-<%= serviceName%> && yarn start:dev"
+  <% if (dependencies) { %>
+  depends_on:
+  <% dependencies.forEach(function(d) { %>
+    - <%= d%> <% }); %>
+  <% } %>
+  env_file: ../service-<%= serviceName%>/.env
+  volumes:
+    - ../../lerna.json:/app/lerna.json
+    - ../../package.json:/app/package.json
+    - ../../node_modules:/app/node_modules
+    - ../component-queue-service:/app/packages/component-queue-service
+    - ../service-<%= serviceName%>:/app/packages/service-<%= serviceName%>
