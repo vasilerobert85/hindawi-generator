@@ -1,72 +1,105 @@
 const Generator = require('yeoman-generator')
 
+const GENERATOR_TYPES = {
+  component: 'component',
+  microservice: 'microservice',
+}
+
 module.exports = class extends Generator {
-  prompting() {
-    return this.prompt([
+  async prompting() {
+    let answers
+    const { packageType } = await this.prompt([
       {
-        type: 'input',
-        name: 'componentName',
+        type: 'list',
+        name: 'packageType',
         required: true,
-        message:
-          'Yo! What is the component name? (e.g. authentication or submission)',
+        message: 'Yo! What kind of package do you want to create?',
+        choices: [
+          { name: 'Hindawi component', value: GENERATOR_TYPES.component },
+          { name: 'Hindawi microservice', value: GENERATOR_TYPES.microservice },
+        ],
       },
-      {
-        type: 'input',
-        name: 'description',
-        required: true,
-        message:
-          'Yo! What is the component description? (e.g. Hindawi implementation of the peer review process.)',
-      },
-    ]).then(answers => {
-      this.componentName = answers.componentName
-      this.description = answers.description
-    })
+    ])
+
+    if (packageType === GENERATOR_TYPES.component) {
+      answers = await this.prompt([
+        {
+          type: 'input',
+          name: 'packageName',
+          required: true,
+          message: 'What is the component name? (e.g. authentication or submission)',
+        },
+        {
+          type: 'input',
+          name: 'description',
+          required: true,
+          message:
+            'What is the component description? (e.g. Hindawi implementation of the peer review process.)',
+        },
+      ])
+    } else {
+      answers = await this.prompt([
+        {
+          type: 'input',
+          name: 'packageName',
+          required: true,
+          message: 'What is the microservice name? (e.g. file conversion)',
+        },
+        {
+          type: 'input',
+          name: 'description',
+          required: true,
+          message: 'What is the microservice supposed to do? (e.g. service used to convert files)',
+        },
+      ])
+    }
+
+    this.packageType = packageType
+    this.answers = answers
   }
 
   writing() {
-    // create the client file structure
-    this.fs.copy(
-      this.templatePath('client'),
-      this.destinationPath(`packages/component-${this.componentName}/client`),
-    )
+    const { packageName, description } = this.answers
+    if (this.packageType === GENERATOR_TYPES.component) {
+      this.fs.copy(
+        this.templatePath('package/client'),
+        this.destinationPath(`packages/component-${packageName}/client`),
+      )
 
-    // create the server file structure
-    this.fs.copy(
-      this.templatePath('server'),
-      this.destinationPath(`packages/component-${this.componentName}/server`),
-    )
+      this.fs.copy(
+        this.templatePath('package/server'),
+        this.destinationPath(`packages/component-${packageName}/server`),
+      )
 
-    // create the config file structure
-    this.fs.copy(
-      this.templatePath('config'),
-      this.destinationPath(`packages/component-${this.componentName}/config`),
-    )
+      this.fs.copy(
+        this.templatePath('package/config'),
+        this.destinationPath(`packages/component-${packageName}/config`),
+      )
 
-    // create the package.json
-    this.fs.copyTpl(
-      this.templatePath('package.json'),
-      this.destinationPath(
-        `packages/component-${this.componentName}/package.json`,
-      ),
-      {
-        componentName: this.componentName,
-        description: this.description,
-        projectVersion: '0.0.1',
-      },
-    )
+      this.fs.copyTpl(
+        this.templatePath('package/package.json'),
+        this.destinationPath(`packages/component-${packageName}/package.json`),
+        {
+          description,
+          projectVersion: '0.0.1',
+          componentName: packageName,
+        },
+      )
 
-    // create the package index
-    this.fs.copy(
-      this.templatePath('index.js'),
-      this.destinationPath(`packages/component-${this.componentName}/index.js`),
-    )
+      this.fs.copy(
+        this.templatePath('package/index.js'),
+        this.destinationPath(`packages/component-${packageName}/index.js`),
+      )
+    }
   }
 
   install() {
-    this.installDependencies({
-      npm: false,
-      bower: false,
-      yarn: true,
-    })
+    // this.installDependencies({
+    //   npm: false,
+    //   bower: false,
+    //   yarn: true
+    // })
+
+    console.log('aici ar trebui sa vina isntall')
   }
 }

@@ -11,7 +11,7 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "yeoman-generator": "^3.2.0"
+    "yeoman-generator": "^4.0.1"
   },
   "repository": {
     "type": "git",
@@ -21,5 +21,19 @@
   "main": "generators/app/index.js",
   "files": [
     "generators"
-  ]
+  ],
+  "scripts": {
+    "clean": "rm -rf node_modules"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jest": "^22.6.4",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.13.0",
+    "prettier": "^1.17.1"
+  }
 }
