@@ -1,0 +1,104 @@
+# Copy this generated service and add it to the main Docker-compose.yml file
+
+variables:
+#add UPPER service name variable for ECR
+  ECR_SERVICE_<%= ecrName%>: $ECR_SERVICE_<%= ecrName%>
+
+push:qa:service-<%= serviceName%>:
+  image: docker:latest
+  stage: push
+  variables:
+  #add UPPER service name variable for ECR
+    ECR_URL: $ECR_SERVICE_<%= ecrName%>
+    DOCKER_PATH: ./packages/service-<%= serviceName%>
+  only:
+    - merge_requests
+    - master
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $ECR_URL:$CI_COMMIT_SHA $DOCKER_PATH
+    - export AWS_DEFAULT_REGION=$AWS_REGION
+    - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+    - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+    - apk update
+    - apk --no-cache add --update curl python python-dev py-pip
+    - pip install awscli --upgrade --user
+    - export PATH=~/.local/bin:/usr/bin/:$PATH
+    - $(aws ecr get-login --no-include-email --region ${AWS_REGION})
+    - docker push $ECR_URL:$CI_COMMIT_SHA
+    - docker tag $ECR_URL:$CI_COMMIT_SHA $ECR_URL:latest
+    - docker push $ECR_URL:latest
+
+push:production:service-<%= serviceName%>:
+  image: docker:latest
+  stage: push
+  when: manual
+  variables:
+    ECR_URL: $ECR_SERVICE_<%= ecrName%>
+    DOCKER_PATH: ./packages/service-<%= serviceName%>
+  only:
+    - master
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $ECR_URL:$CI_COMMIT_SHA $DOCKER_PATH
+    - export AWS_DEFAULT_REGION=$AWS_REGION
+    - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+    - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+    - apk update
+    - apk --no-cache add --update curl python python-dev py-pip
+    - pip install awscli --upgrade --user
+    - export PATH=~/.local/bin:/usr/bin/:$PATH
+    - $(aws ecr get-login --no-include-email --region ${AWS_REGION})
+    - docker push $ECR_URL:$CI_COMMIT_SHA
+    - docker tag $ECR_URL:$CI_COMMIT_SHA $ECR_URL:production
+    - docker push $ECR_URL:production
+
+deploy:qa:service-<%= serviceName%>:
+  image: docker:latest
+  stage: deploy
+  only:
+    - merge_requests
+    - master
+  variables:
+    EB_ENV: qa-service-<%= serviceName%>
+    EB_VERSION: qa-service-<%= serviceName%>
+    GIT_STRATEGY: none
+  environment:
+    name: qa
+  script:
+    - export AWS_DEFAULT_REGION=$AWS_REGION
+    - export AWS_ACCESS_KEY_ID=$EB_AWS_ACCESS
+    - export AWS_SECRET_ACCESS_KEY=$EB_AWS_SECRET
+    - apk update
+    - apk --no-cache add --update curl python python-dev py-pip
+    - pip install awscli --upgrade --user
+    - export PATH=~/.local/bin:/usr/bin/:$PATH
+    - aws elasticbeanstalk update-environment --environment-name $EB_ENV --version-label $EB_VERSION
+  after_script:
+   - git tag QA
+   - git push origin --tags
+
+deploy:production:service-<%= serviceName%>:
+  image: docker:latest
+  stage: deploy
+  when: manual
+  only:
+    - master
+  variables:
+    EB_ENV: prod-service-<%= serviceName%>
+    EB_VERSION: prod-service-<%= serviceName%>
+    GIT_STRATEGY: none
+  environment:
+    name: production
+  script:
+    - export AWS_DEFAULT_REGION=$AWS_REGION
+    - export AWS_ACCESS_KEY_ID=$EB_AWS_ACCESS
+    - export AWS_SECRET_ACCESS_KEY=$EB_AWS_SECRET
+    - apk update
+    - apk --no-cache add --update curl python python-dev py-pip
+    - pip install awscli --upgrade --user
+    - export PATH=~/.local/bin:/usr/bin/:$PATH
+    - aws elasticbeanstalk update-environment --environment-name $EB_ENV --version-label $EB_VERSION
+  after_script:
+   - git tag PROD
+   - git push origin --tags
