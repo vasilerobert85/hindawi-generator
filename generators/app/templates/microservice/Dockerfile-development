@@ -1,1 +1,13 @@
-' '
+FROM node:10-alpine
+
+WORKDIR /app
+
+COPY ./package.json .
+
+RUN apk --no-cache add --virtual native-deps \
+  python2 g++ gcc make \
+  && yarn install --frozen-lockfile \
+  && yarn cache clean \
+  && apk del native-deps
+
+EXPOSE 3000

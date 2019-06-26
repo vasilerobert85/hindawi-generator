@@ -1,7 +1,7 @@
 const { forEach } = require('lodash')
-require('./node_modules/dotenv').config() // eslint-disable-line
+require('dotenv').config()
 
-const { createQueueService } = require('./node_modules/component-queue-service') // eslint-disable-line
+const { createQueueService } = require('@hindawi/queue-service')
 
 function registerEventHandlers(messageQueue) {
   const handlers = require('./src/eventHandlers')
