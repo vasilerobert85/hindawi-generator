@@ -3,7 +3,7 @@
 service-<%= serviceName%>:
   build:
     context: ../../
-    dockerfile: ./packages/service-<%= serviceName%>/Dockerfile
+    dockerfile: ./packages/service-<%= serviceName%>/Dockerfile-development
   command: sh -c "cd packages/service-<%= serviceName%> && yarn start:dev"
   <% if (dependencies) { %>
   depends_on:

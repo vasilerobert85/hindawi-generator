@@ -478,10 +478,7 @@ Resources:
                         MachineName = "gitlab-docker-machine-%s"
                         MachineOptions = ["engine-storage-driver=overlay2", "amazonec2-instance-type=${GitlabRunnerInstanceType}", "amazonec2-region=${AWS::Region}", "amazonec2-vpc-id=${VpcId}", "amazonec2-security-group=${AWS::StackName}-RunnersSecurityGroup", "amazonec2-use-private-address=true", "amazonec2-iam-instance-profile=${RunnersInstanceProfile}" ${LocalSpotVar} ]
                         OffPeakTimezone = "${GitlabOffPeakTimezone}"
-# should the off hours need to be changed
-# do change the current setup for having the instances run
-# working hours are set from Monday to Friday 8 to 18
-                        OffPeakPeriods = ["* * 0-8,18-23 * * mon-fri *", "* * * * * sat,sun *"]
+                        OffPeakPeriods = ["* * 0-8,18-23 * * mon-fri *","* * * * * sat,sun *"]
                         OffPeakIdleCount = ${GitlabOffPeakIdleCount}
                         OffPeakIdleTime = ${GitlabOffPeakIdleTime}
                   - LocalSpotVar: !If ['UseSpotInstances', !Sub ', "amazonec2-request-spot-instance=true", "amazonec2-spot-price=${GitLabRunnerSpotInstancePrice}"', '']

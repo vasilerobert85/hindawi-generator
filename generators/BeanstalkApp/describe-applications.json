@@ -1,0 +1,79 @@
+{
+    "Applications": [
+        {
+            "ApplicationArn": "arn:aws:elasticbeanstalk:eu-west-1:918602980697:application/Screening",
+            "ApplicationName": "Screening",
+            "DateCreated": "2019-05-20T11:26:32.634Z",
+            "DateUpdated": "2019-05-20T11:26:32.634Z",
+            "Versions": [
+                "qa-service-suspicious-keywords",
+                "app-screening-qa",
+                "qa-service-language-check",
+                "qa-service-file-conversion"
+            ],
+            "ConfigurationTemplates": [
+                "qa-service-suspicious-keywords",
+                "app-screening-qa",
+                "qa-service-file-conversion",
+                "qa-service-language-check"
+            ],
+            "ResourceLifecycleConfig": {
+                "VersionLifecycleConfig": {
+                    "MaxCountRule": {
+                        "Enabled": false,
+                        "MaxCount": 200,
+                        "DeleteSourceFromS3": false
+                    },
+                    "MaxAgeRule": {
+                        "Enabled": false,
+                        "MaxAgeInDays": 180,
+                        "DeleteSourceFromS3": false
+                    }
+                }
+            }
+        },
+        {
+            "ApplicationArn": "arn:aws:elasticbeanstalk:eu-west-1:918602980697:application/Review",
+            "ApplicationName": "Review",
+            "Description": "Hindawi Review Application",
+            "DateCreated": "2019-02-23T11:06:58.406Z",
+            "DateUpdated": "2019-02-23T11:06:58.406Z",
+            "Versions": [
+                "qa-no-nginx",
+                "upgrade",
+                "qa",
+                "production",
+                "styleguide",
+                "staging",
+                "qa-review",
+                "demo",
+                "production-old"
+            ],
+            "ConfigurationTemplates": [
+                "qa",
+                "styleguide",
+                "upgrade-env",
+                "gql",
+                "production",
+                "qa-review",
+                "upgrade-env1",
+                "demo",
+                "demo-review"
+            ],
+            "ResourceLifecycleConfig": {
+                "VersionLifecycleConfig": {
+                    "MaxCountRule": {
+                        "Enabled": false,
+                        "MaxCount": 200,
+                        "DeleteSourceFromS3": false
+                    },
+                    "MaxAgeRule": {
+                        "Enabled": false,
+                        "MaxAgeInDays": 180,
+                        "DeleteSourceFromS3": false
+                    }
+                }
+            }
+        }
+    ]
+}

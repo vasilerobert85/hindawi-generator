@@ -1,14 +1,12 @@
 # Copy this generated service and add it to the main Docker-compose.yml file
 
 variables:
-#add UPPER service name variable for ECR
   ECR_SERVICE_<%= ecrName%>: $ECR_SERVICE_<%= ecrName%>
 
 push:qa:service-<%= serviceName%>:
   image: docker:latest
   stage: push
   variables:
-  #add UPPER service name variable for ECR
     ECR_URL: $ECR_SERVICE_<%= ecrName%>
     DOCKER_PATH: ./packages/service-<%= serviceName%>
   only:

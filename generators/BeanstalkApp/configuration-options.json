@@ -1,0 +1,1370 @@
+{
+    "SolutionStackName": "64bit Amazon Linux 2018.03 v2.12.12 running Docker 18.06.1-ce",
+    "PlatformArn": "arn:aws:elasticbeanstalk:eu-west-1::platform/Docker running on 64bit Amazon Linux/2.12.12",
+    "Options": [
+        {
+            "Namespace": "aws:elasticbeanstalk:environment:process",
+            "Name": "DeregistrationDelay",
+            "DefaultValue": "20",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 0,
+            "MaxValue": 3600
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:healthreporting:system",
+            "Name": "SystemType",
+            "DefaultValue": "basic",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "basic",
+                "enhanced"
+            ]
+        },
+        {
+            "Namespace": "aws:autoscaling:scheduledaction",
+            "Name": "Recurrence",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:autoscaling:updatepolicy:rollingupdate",
+            "Name": "PauseTime",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "Regex": {
+                "Pattern": "^\\S*$",
+                "Label": "No spaces"
+            }
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:managedactions",
+            "Name": "ManagedActionsEnabled",
+            "DefaultValue": "false",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Boolean"
+        },
+        {
+            "Namespace": "aws:autoscaling:launchconfiguration",
+            "Name": "BlockDeviceMappings",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "CommaSeparatedList",
+            "Regex": {
+                "Pattern": "((/dev/([sh]d[a-z]([1-9]?|1[0-5]?)|xvd[a-z]|xvd[bc][a-z])|xvd[a-z]|xvd[bc][a-z])=(none|ephemeral[0-9]+|(snap-[a-zA-Z0-9]+)?(:([0-9]+)?)?(:(true|false)?)?(:gp2|:standard|:st1|:sc1|:io1:[0-9]+)?))(,\\s*(/dev/([sh]d[a-z]([1-9]?|1[0-5]?)|xvd[a-z]|xvd[bc][a-z])|xvd[a-z]|xvd[bc][a-z])=(none|ephemeral[0-9]+|(snap-[a-zA-Z0-9]+)?(:([0-9]+)?)?(:(true|false)?)?(:gp2|:standard|:st1|:sc1|:io1:[0-9]+)?))*",
+                "Label": "<DeviceName>=<Volume>, <Volume> is one of 'none', 'ephemeral<NUMBER>', or '[<SnapshotId>]:[<VolumeSize>]:[DeleteOnTermination]:[<VolumeType>][:<IOPS> (only when VolumeType is io1)]'."
+            }
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:sns:topics",
+            "Name": "Notification Protocol",
+            "DefaultValue": "email",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "http",
+                "https",
+                "email",
+                "email-json",
+                "sqs"
+            ]
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment",
+            "Name": "LoadBalancerType",
+            "DefaultValue": "classic",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "classic",
+                "application",
+                "network"
+            ]
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:managedactions:platformupdate",
+            "Name": "InstanceRefreshEnabled",
+            "DefaultValue": "false",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Boolean"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:command",
+            "Name": "IgnoreHealthCheck",
+            "DefaultValue": "false",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Boolean"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:control",
+            "Name": "LaunchType",
+            "DefaultValue": "Normal",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "Migration",
+                "Normal"
+            ]
+        },
+        {
+            "Namespace": "aws:autoscaling:trigger",
+            "Name": "Period",
+            "DefaultValue": "5",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 1,
+            "MaxValue": 600
+        },
+        {
+            "Namespace": "aws:autoscaling:scheduledaction",
+            "Name": "DesiredCapacity",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 0,
+            "MaxValue": 10000
+        },
+        {
+            "Namespace": "aws:autoscaling:scheduledaction",
+            "Name": "Suspend",
+            "DefaultValue": "false",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Boolean"
+        },
+        {
+            "Namespace": "aws:cloudformation:template:parameter",
+            "Name": "EnvironmentVariables",
+            "DefaultValue": "",
+            "ChangeSeverity": "RestartApplicationServer",
+            "UserDefined": false,
+            "ValueType": "KeyValueList"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:cloudwatch:logs:health",
+            "Name": "DeleteOnTerminate",
+            "DefaultValue": "false",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Boolean"
+        },
+        {
+            "Namespace": "aws:autoscaling:trigger",
+            "Name": "UpperBreachScaleIncrement",
+            "DefaultValue": "1",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MaxLength": 200
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment:process",
+            "Name": "HealthCheckPath",
+            "DefaultValue": "/",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MaxLength": 1024
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment:process",
+            "Name": "Port",
+            "DefaultValue": "80",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 1,
+            "MaxValue": 65535
+        },
+        {
+            "Namespace": "aws:elbv2:loadbalancer",
+            "Name": "AccessLogsS3Prefix",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "Regex": {
+                "Pattern": "^[^\\\\^'><{}\\[\\]#%\"~|]*$",
+                "Label": "Can be any printable ASCII character, except for the symbols \"'^<>{}[]#%~|"
+            }
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:monitoring",
+            "Name": "Automatically Terminate Unhealthy Instances",
+            "DefaultValue": "true",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Boolean"
+        },
+        {
+            "Namespace": "aws:cloudformation:template:parameter",
+            "Name": "HooksPkgUrl",
+            "DefaultValue": "https://s3.dualstack.eu-west-1.amazonaws.com/elasticbeanstalk-env-resources-eu-west-1/stalks/eb_docker_4.2.1.201088.0_1559163594/lib/hooks.tar.gz",
+            "ChangeSeverity": "Unknown",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment:process",
+            "Name": "Protocol",
+            "DefaultValue": "HTTP",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "HTTP",
+                "HTTPS"
+            ]
+        },
+        {
+            "Namespace": "aws:autoscaling:launchconfiguration",
+            "Name": "MonitoringInterval",
+            "DefaultValue": "5 minute",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "1 minute",
+                "5 minute"
+            ]
+        },
+        {
+            "Namespace": "aws:elbv2:loadbalancer",
+            "Name": "AccessLogsS3Enabled",
+            "DefaultValue": "false",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Boolean"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment:process",
+            "Name": "HealthyThresholdCount",
+            "DefaultValue": "3",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 1,
+            "MaxValue": 10
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment:process",
+            "Name": "StickinessEnabled",
+            "DefaultValue": "false",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Boolean"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:healthreporting:system",
+            "Name": "ConfigDocument",
+            "DefaultValue": "{\"Version\":1,\"CloudWatchMetrics\":{\"Instance\":{\"CPUIrq\":null,\"LoadAverage5min\":null,\"ApplicationRequests5xx\":null,\"ApplicationRequests4xx\":null,\"CPUUser\":null,\"LoadAverage1min\":null,\"ApplicationLatencyP50\":null,\"CPUIdle\":null,\"InstanceHealth\":null,\"ApplicationLatencyP95\":null,\"ApplicationLatencyP85\":null,\"RootFilesystemUtil\":null,\"ApplicationLatencyP90\":null,\"CPUSystem\":null,\"ApplicationLatencyP75\":null,\"CPUSoftirq\":null,\"ApplicationLatencyP10\":null,\"ApplicationLatencyP99\":null,\"ApplicationRequestsTotal\":null,\"ApplicationLatencyP99.9\":null,\"ApplicationRequests3xx\":null,\"ApplicationRequests2xx\":null,\"CPUIowait\":null,\"CPUNice\":null},\"Environment\":{\"InstancesSevere\":null,\"InstancesDegraded\":null,\"ApplicationRequests5xx\":null,\"ApplicationRequests4xx\":null,\"ApplicationLatencyP50\":null,\"ApplicationLatencyP95\":null,\"ApplicationLatencyP85\":null,\"InstancesUnknown\":null,\"ApplicationLatencyP90\":null,\"InstancesInfo\":null,\"InstancesPending\":null,\"ApplicationLatencyP75\":null,\"ApplicationLatencyP10\":null,\"ApplicationLatencyP99\":null,\"ApplicationRequestsTotal\":null,\"InstancesNoData\":null,\"ApplicationLatencyP99.9\":null,\"ApplicationRequests3xx\":null,\"ApplicationRequests2xx\":null,\"InstancesOk\":null,\"InstancesWarning\":null}},\"Rules\":{\"Environment\":{\"Application\":{\"ApplicationRequests4xx\":{\"Enabled\":true}}}}}",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Json",
+            "MaxLength": 32000
+        },
+        {
+            "Namespace": "aws:autoscaling:trigger",
+            "Name": "EvaluationPeriods",
+            "DefaultValue": "1",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 1,
+            "MaxValue": 600
+        },
+        {
+            "Namespace": "aws:elbv2:listenerrule",
+            "Name": "Priority",
+            "DefaultValue": "1",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 1,
+            "MaxValue": 1000
+        },
+        {
+            "Namespace": "aws:autoscaling:launchconfiguration",
+            "Name": "RootVolumeSize",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 8,
+            "MaxValue": 16384
+        },
+        {
+            "Namespace": "aws:autoscaling:launchconfiguration",
+            "Name": "RootVolumeIOPS",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 100,
+            "MaxValue": 20000
+        },
+        {
+            "Namespace": "aws:ec2:vpc",
+            "Name": "AssociatePublicIpAddress",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "Boolean"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:command",
+            "Name": "DeploymentPolicy",
+            "DefaultValue": "AllAtOnce",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "AllAtOnce",
+                "Rolling",
+                "RollingWithAdditionalBatch",
+                "Immutable"
+            ]
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment",
+            "Name": "EnvironmentType",
+            "DefaultValue": "LoadBalanced",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "LoadBalanced",
+                "SingleInstance"
+            ]
+        },
+        {
+            "Namespace": "aws:autoscaling:trigger",
+            "Name": "UpperThreshold",
+            "DefaultValue": "2000000",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 0
+        },
+        {
+            "Namespace": "aws:elbv2:listenerrule",
+            "Name": "Process",
+            "DefaultValue": "default",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:cloudformation:template:parameter",
+            "Name": "AppSource",
+            "DefaultValue": "https://s3-eu-west-1.amazonaws.com/elasticbeanstalk-samples-eu-west-1/docker-sample-v3.zip",
+            "ChangeSeverity": "Unknown",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:ec2:vpc",
+            "Name": "VPCId",
+            "ChangeSeverity": "Unknown",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:autoscaling:asg",
+            "Name": "MinSize",
+            "DefaultValue": "1",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 0,
+            "MaxValue": 10000
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:control",
+            "Name": "LaunchTimeout",
+            "DefaultValue": "0",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 0
+        },
+        {
+            "Namespace": "aws:autoscaling:updatepolicy:rollingupdate",
+            "Name": "RollingUpdateType",
+            "DefaultValue": "Time",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "Time",
+                "Health",
+                "Immutable"
+            ]
+        },
+        {
+            "Namespace": "aws:autoscaling:trigger",
+            "Name": "LowerThreshold",
+            "DefaultValue": "2000000",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 0
+        },
+        {
+            "Namespace": "aws:autoscaling:asg",
+            "Name": "Availability Zones",
+            "DefaultValue": "Any",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "Any",
+                "Any 1",
+                "Any 2",
+                "Any 3"
+            ]
+        },
+        {
+            "Namespace": "aws:cloudformation:template:parameter",
+            "Name": "InstanceTypeFamily",
+            "DefaultValue": "t2",
+            "ChangeSeverity": "Unknown",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:application:environment",
+            "Name": "DB_USER",
+            "ChangeSeverity": "RestartApplicationServer",
+            "UserDefined": true,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elbv2:loadbalancer",
+            "Name": "SecurityGroups",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "CommaSeparatedList"
+        },
+        {
+            "Namespace": "aws:autoscaling:trigger",
+            "Name": "BreachDuration",
+            "DefaultValue": "5",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 1,
+            "MaxValue": 600
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment:process",
+            "Name": "MatcherHTTPCode",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:ec2:vpc",
+            "Name": "Subnets",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "CommaSeparatedList"
+        },
+        {
+            "Namespace": "aws:autoscaling:scheduledaction",
+            "Name": "MinSize",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 0,
+            "MaxValue": 10000
+        },
+        {
+            "Namespace": "aws:autoscaling:launchconfiguration",
+            "Name": "SSHSourceRestriction",
+            "DefaultValue": "tcp,22,22,0.0.0.0/0",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "Regex": {
+                "Pattern": ".+,\\d+,\\d+,.+",
+                "Label": "<protocol>,<fromport>,<toport>,source"
+            }
+        },
+        {
+            "Namespace": "aws:autoscaling:launchconfiguration",
+            "Name": "SecurityGroups",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "CommaSeparatedList",
+            "MaxLength": 200
+        },
+        {
+            "Namespace": "aws:autoscaling:launchconfiguration",
+            "Name": "ImageId",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MaxLength": 200,
+            "Regex": {
+                "Pattern": "ami-.+",
+                "Label": "must start with ami-"
+            }
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:command",
+            "Name": "Timeout",
+            "DefaultValue": "600",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 1,
+            "MaxValue": 3600
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:cloudwatch:logs",
+            "Name": "RetentionInDays",
+            "DefaultValue": "7",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "1",
+                "3",
+                "5",
+                "7",
+                "14",
+                "30",
+                "60",
+                "90",
+                "120",
+                "150",
+                "180",
+                "365",
+                "400",
+                "545",
+                "731",
+                "1827",
+                "3653"
+            ]
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:managedactions:platformupdate",
+            "Name": "UpdateLevel",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "patch",
+                "minor"
+            ]
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:application:environment",
+            "Name": "AWS_SNS_TOPIC",
+            "ChangeSeverity": "RestartApplicationServer",
+            "UserDefined": true,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:autoscaling:updatepolicy:rollingupdate",
+            "Name": "RollingUpdateEnabled",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Boolean"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:hostmanager",
+            "Name": "LogPublicationControl",
+            "DefaultValue": "false",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Boolean",
+            "ValueOptions": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "Namespace": "aws:autoscaling:asg",
+            "Name": "MaxSize",
+            "DefaultValue": "4",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 0,
+            "MaxValue": 10000
+        },
+        {
+            "Namespace": "aws:elbv2:listenerrule",
+            "Name": "HostHeaders",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "CommaSeparatedList"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment",
+            "Name": "ServiceRole",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MaxLength": 500
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:application:environment",
+            "Name": "DB_HOST",
+            "ChangeSeverity": "RestartApplicationServer",
+            "UserDefined": true,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:control",
+            "Name": "DefaultSSHPort",
+            "DefaultValue": "22",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:application",
+            "Name": "Application Healthcheck URL",
+            "DefaultValue": "",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MaxLength": 200,
+            "Regex": {
+                "Pattern": "((HTTP|TCP|SSL|HTTPS):)?(\\d*)(/.*)?",
+                "Label": "HTTP(S) or TCP|SSL (optional - default HTTP) followed by a port (optional - default 80) followed by an optional path"
+            }
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment:proxy",
+            "Name": "ProxyServer",
+            "DefaultValue": "nginx",
+            "ChangeSeverity": "RestartApplicationServer",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "nginx",
+                "none"
+            ]
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:application:environment",
+            "Name": "AWS_SNS_ENDPOINT",
+            "ChangeSeverity": "RestartApplicationServer",
+            "UserDefined": true,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment:process",
+            "Name": "StickinessType",
+            "DefaultValue": "lb_cookie",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "lb_cookie"
+            ]
+        },
+        {
+            "Namespace": "aws:autoscaling:scheduledaction",
+            "Name": "StartTime",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment:process",
+            "Name": "UnhealthyThresholdCount",
+            "DefaultValue": "5",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 1,
+            "MaxValue": 10
+        },
+        {
+            "Namespace": "aws:autoscaling:scheduledaction",
+            "Name": "MaxSize",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 0,
+            "MaxValue": 10000
+        },
+        {
+            "Namespace": "aws:autoscaling:launchconfiguration",
+            "Name": "InstanceType",
+            "DefaultValue": "t2.micro",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "t2.micro",
+                "t2.small",
+                "t2.medium",
+                "t2.large",
+                "t2.xlarge",
+                "t2.2xlarge",
+                "m3.medium",
+                "m3.large",
+                "m3.xlarge",
+                "m3.2xlarge",
+                "c3.large",
+                "c3.xlarge",
+                "c3.2xlarge",
+                "c3.4xlarge",
+                "c3.8xlarge",
+                "t1.micro",
+                "t2.nano",
+                "m1.small",
+                "m1.medium",
+                "m1.large",
+                "m1.xlarge",
+                "c1.medium",
+                "c1.xlarge",
+                "c4.large",
+                "c4.xlarge",
+                "c4.2xlarge",
+                "c4.4xlarge",
+                "c4.8xlarge",
+                "c5.large",
+                "c5.xlarge",
+                "c5.2xlarge",
+                "c5.4xlarge",
+                "c5.9xlarge",
+                "c5.18xlarge",
+                "c5n.large",
+                "c5n.xlarge",
+                "c5n.2xlarge",
+                "c5n.4xlarge",
+                "c5n.9xlarge",
+                "c5n.18xlarge",
+                "m2.xlarge",
+                "m2.2xlarge",
+                "m2.4xlarge",
+                "r4.large",
+                "r4.xlarge",
+                "r4.2xlarge",
+                "r4.4xlarge",
+                "r4.8xlarge",
+                "r4.16xlarge",
+                "m4.large",
+                "m4.xlarge",
+                "m4.2xlarge",
+                "m4.4xlarge",
+                "m4.10xlarge",
+                "m4.16xlarge",
+                "cc2.8xlarge",
+                "hi1.4xlarge",
+                "hs1.8xlarge",
+                "cr1.8xlarge",
+                "g2.2xlarge",
+                "g2.8xlarge",
+                "p2.xlarge",
+                "p2.8xlarge",
+                "p2.16xlarge",
+                "p3.2xlarge",
+                "p3.8xlarge",
+                "p3.16xlarge",
+                "i2.xlarge",
+                "i2.2xlarge",
+                "i2.4xlarge",
+                "i2.8xlarge",
+                "i3.large",
+                "i3.xlarge",
+                "i3.2xlarge",
+                "i3.4xlarge",
+                "i3.8xlarge",
+                "i3.16xlarge",
+                "r3.large",
+                "r3.xlarge",
+                "r3.2xlarge",
+                "r3.4xlarge",
+                "r3.8xlarge",
+                "d2.xlarge",
+                "d2.2xlarge",
+                "d2.4xlarge",
+                "d2.8xlarge",
+                "x1.16xlarge",
+                "x1.32xlarge",
+                "x1e.xlarge",
+                "x1e.2xlarge",
+                "x1e.4xlarge",
+                "x1e.8xlarge",
+                "x1e.16xlarge",
+                "x1e.32xlarge",
+                "f1.2xlarge",
+                "f1.4xlarge",
+                "f1.16xlarge",
+                "g3.4xlarge",
+                "g3.8xlarge",
+                "g3.16xlarge",
+                "h1.2xlarge",
+                "h1.4xlarge",
+                "h1.8xlarge",
+                "h1.16xlarge",
+                "m5.large",
+                "m5.xlarge",
+                "m5.2xlarge",
+                "m5.4xlarge",
+                "m5.12xlarge",
+                "m5.24xlarge",
+                "m5.metal",
+                "c5d.large",
+                "c5d.xlarge",
+                "c5d.2xlarge",
+                "c5d.4xlarge",
+                "c5d.9xlarge",
+                "c5d.18xlarge",
+                "m5d.large",
+                "m5d.xlarge",
+                "m5d.2xlarge",
+                "m5d.4xlarge",
+                "m5d.12xlarge",
+                "m5d.24xlarge",
+                "m5d.metal",
+                "z1d.large",
+                "z1d.xlarge",
+                "z1d.2xlarge",
+                "z1d.3xlarge",
+                "z1d.6xlarge",
+                "z1d.12xlarge",
+                "z1d.metal",
+                "r5.large",
+                "r5.xlarge",
+                "r5.2xlarge",
+                "r5.4xlarge",
+                "r5.12xlarge",
+                "r5.24xlarge",
+                "r5.metal",
+                "t3.nano",
+                "t3.micro",
+                "t3.small",
+                "t3.medium",
+                "t3.large",
+                "t3.xlarge",
+                "t3.2xlarge",
+                "g3s.xlarge",
+                "r5.large",
+                "r5.xlarge",
+                "r5.2xlarge",
+                "r5.4xlarge",
+                "r5.12xlarge",
+                "r5.24xlarge",
+                "r5d.large",
+                "r5d.xlarge",
+                "r5d.2xlarge",
+                "r5d.4xlarge",
+                "r5d.12xlarge",
+                "r5d.24xlarge",
+                "m5a.large",
+                "m5a.xlarge",
+                "m5a.2xlarge",
+                "m5a.4xlarge",
+                "m5a.12xlarge",
+                "m5a.24xlarge",
+                "r5a.large",
+                "r5a.xlarge",
+                "r5a.2xlarge",
+                "r5a.4xlarge",
+                "r5a.12xlarge",
+                "r5a.24xlarge",
+                "t3a.nano",
+                "t3a.micro",
+                "t3a.small",
+                "t3a.medium",
+                "t3a.large",
+                "t3a.xlarge",
+                "t3a.2xlarge"
+            ]
+        },
+        {
+            "Namespace": "aws:elbv2:listener",
+            "Name": "SSLCertificateArns",
+            "ChangeSeverity": "Unknown",
+            "UserDefined": false,
+            "ValueType": "CommaSeparatedList"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:command",
+            "Name": "BatchSizeType",
+            "DefaultValue": "Percentage",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "Percentage",
+                "Fixed"
+            ]
+        },
+        {
+            "Namespace": "aws:autoscaling:updatepolicy:rollingupdate",
+            "Name": "MinInstancesInService",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 0,
+            "MaxValue": 9999
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:cloudwatch:logs:health",
+            "Name": "HealthStreamingEnabled",
+            "DefaultValue": "false",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Boolean"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:healthreporting:system",
+            "Name": "HealthCheckSuccessThreshold",
+            "DefaultValue": "Ok",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "Ok",
+                "Warning",
+                "Degraded",
+                "Severe"
+            ]
+        },
+        {
+            "Namespace": "aws:elbv2:listener",
+            "Name": "Rules",
+            "ChangeSeverity": "Unknown",
+            "UserDefined": false,
+            "ValueType": "List"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment:process",
+            "Name": "HealthCheckTimeout",
+            "DefaultValue": "5",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 1,
+            "MaxValue": 60
+        },
+        {
+            "Namespace": "aws:autoscaling:launchconfiguration",
+            "Name": "EC2KeyName",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MaxLength": 200
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:sns:topics",
+            "Name": "Notification Topic Name",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment",
+            "Name": "ExternalExtensionsS3Key",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MaxLength": 1024
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:cloudwatch:logs",
+            "Name": "DeleteOnTerminate",
+            "DefaultValue": "false",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Boolean"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment:process",
+            "Name": "StickinessLBCookieDuration",
+            "DefaultValue": "86400",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 1,
+            "MaxValue": 604800
+        },
+        {
+            "Namespace": "aws:autoscaling:trigger",
+            "Name": "LowerBreachScaleIncrement",
+            "DefaultValue": "-1",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MaxLength": 200
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:managedactions",
+            "Name": "PreferredStartTime",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MaxLength": 9,
+            "Regex": {
+                "Pattern": "(SUN|MON|TUE|WED|THU|FRI|SAT):([01]?[0-9]|2[0-3]):[0-5][0-9]",
+                "Label": "Validate value in DDD:HH:MM format"
+            }
+        },
+        {
+            "Namespace": "aws:elbv2:listener",
+            "Name": "ListenerEnabled",
+            "DefaultValue": "true",
+            "ChangeSeverity": "Unknown",
+            "UserDefined": false,
+            "ValueType": "Boolean"
+        },
+        {
+            "Namespace": "aws:autoscaling:trigger",
+            "Name": "MeasureName",
+            "DefaultValue": "NetworkOut",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "CPUUtilization",
+                "NetworkIn",
+                "NetworkOut",
+                "DiskWriteOps",
+                "DiskReadBytes",
+                "DiskReadOps",
+                "DiskWriteBytes",
+                "Latency",
+                "RequestCount",
+                "HealthyHostCount",
+                "UnHealthyHostCount",
+                "TargetResponseTime"
+            ]
+        },
+        {
+            "Namespace": "aws:autoscaling:updatepolicy:rollingupdate",
+            "Name": "MaxBatchSize",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 1,
+            "MaxValue": 10000
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:cloudwatch:logs",
+            "Name": "StreamLogs",
+            "DefaultValue": "false",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Boolean"
+        },
+        {
+            "Namespace": "aws:autoscaling:asg",
+            "Name": "Cooldown",
+            "DefaultValue": "360",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 0,
+            "MaxValue": 10000
+        },
+        {
+            "Namespace": "aws:elbv2:listener",
+            "Name": "DefaultProcess",
+            "DefaultValue": "default",
+            "ChangeSeverity": "Unknown",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elbv2:loadbalancer",
+            "Name": "AccessLogsS3Bucket",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MaxLength": 63
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment:process",
+            "Name": "HealthCheckInterval",
+            "DefaultValue": "15",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 5,
+            "MaxValue": 300
+        },
+        {
+            "Namespace": "aws:elbv2:loadbalancer",
+            "Name": "IdleTimeout",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 1,
+            "MaxValue": 3600
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:application:environment",
+            "Name": "DATABASE",
+            "ChangeSeverity": "RestartApplicationServer",
+            "UserDefined": true,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:sns:topics",
+            "Name": "Notification Endpoint",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:command",
+            "Name": "BatchSize",
+            "DefaultValue": "100",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MinValue": 1,
+            "MaxValue": 10000
+        },
+        {
+            "Namespace": "aws:elbv2:listener",
+            "Name": "SSLPolicy",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elbv2:loadbalancer",
+            "Name": "ManagedSecurityGroup",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:application:environment",
+            "Name": "AWS_SNS_SQS_ACCESS_KEY",
+            "ChangeSeverity": "RestartApplicationServer",
+            "UserDefined": true,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:application:environment",
+            "Name": "AWS_SNS_SQS_REGION",
+            "ChangeSeverity": "RestartApplicationServer",
+            "UserDefined": true,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elbv2:listener",
+            "Name": "Protocol",
+            "DefaultValue": "HTTP",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "HTTP",
+                "HTTPS"
+            ]
+        },
+        {
+            "Namespace": "aws:ec2:vpc",
+            "Name": "ELBSubnets",
+            "ChangeSeverity": "Unknown",
+            "UserDefined": false,
+            "ValueType": "CommaSeparatedList"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:control",
+            "Name": "RollbackLaunchOnFailure",
+            "DefaultValue": "false",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Boolean"
+        },
+        {
+            "Namespace": "aws:cloudformation:template:parameter",
+            "Name": "InstancePort",
+            "DefaultValue": "80",
+            "ChangeSeverity": "Unknown",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:autoscaling:updatepolicy:rollingupdate",
+            "Name": "Timeout",
+            "DefaultValue": "PT30M",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "Regex": {
+                "Pattern": "^\\S*$",
+                "Label": "No spaces"
+            }
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:sns:topics",
+            "Name": "Notification Topic ARN",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:cloudwatch:logs:health",
+            "Name": "RetentionInDays",
+            "DefaultValue": "7",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "1",
+                "3",
+                "5",
+                "7",
+                "14",
+                "30",
+                "60",
+                "90",
+                "120",
+                "150",
+                "180",
+                "365",
+                "400",
+                "545",
+                "731",
+                "1827",
+                "3653"
+            ]
+        },
+        {
+            "Namespace": "aws:autoscaling:launchconfiguration",
+            "Name": "IamInstanceProfile",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:application:environment",
+            "Name": "DB_PASS",
+            "ChangeSeverity": "RestartApplicationServer",
+            "UserDefined": true,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:autoscaling:trigger",
+            "Name": "Statistic",
+            "DefaultValue": "Average",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "Minimum",
+                "Maximum",
+                "Sum",
+                "Average"
+            ]
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:environment",
+            "Name": "ExternalExtensionsS3Bucket",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "MaxLength": 255
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:application:environment",
+            "Name": "AWS_SQS_ENDPOINT",
+            "ChangeSeverity": "RestartApplicationServer",
+            "UserDefined": true,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:autoscaling:launchconfiguration",
+            "Name": "RootVolumeType",
+            "ChangeSeverity": "RestartEnvironment",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "standard",
+                "gp2",
+                "io1"
+            ]
+        },
+        {
+            "Namespace": "aws:autoscaling:trigger",
+            "Name": "Unit",
+            "DefaultValue": "Bytes",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar",
+            "ValueOptions": [
+                "Seconds",
+                "Percent",
+                "Bytes",
+                "Bits",
+                "Count",
+                "Bytes/Second",
+                "Bits/Second",
+                "Count/Second",
+                "None"
+            ]
+        },
+        {
+            "Namespace": "aws:elbv2:listenerrule",
+            "Name": "PathPatterns",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "CommaSeparatedList"
+        },
+        {
+            "Namespace": "aws:autoscaling:scheduledaction",
+            "Name": "EndTime",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:application:environment",
+            "Name": "AWS_SQS_QUEUE_NAME",
+            "ChangeSeverity": "RestartApplicationServer",
+            "UserDefined": true,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:elasticbeanstalk:application:environment",
+            "Name": "AWS_SNS_SQS_SECRET_KEY",
+            "ChangeSeverity": "RestartApplicationServer",
+            "UserDefined": true,
+            "ValueType": "Scalar"
+        },
+        {
+            "Namespace": "aws:autoscaling:asg",
+            "Name": "Custom Availability Zones",
+            "DefaultValue": "",
+            "ChangeSeverity": "NoInterruption",
+            "UserDefined": false,
+            "ValueType": "List",
+            "ValueOptions": [
+                "eu-west-1a",
+                "eu-west-1b",
+                "eu-west-1c"
+            ]
+        },
+        {
+            "Namespace": "aws:ec2:vpc",
+            "Name": "ELBScheme",
+            "DefaultValue": "public",
+            "ChangeSeverity": "Unknown",
+            "UserDefined": false,
+            "ValueType": "Scalar"
+        }
+    ]
+}

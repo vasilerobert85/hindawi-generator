@@ -114,15 +114,33 @@ module.exports = class extends Generator {
       )
 
       this.fs.copy(
-        this.templatePath('microservice/gitlab-ci'),
-        this.destinationPath(`packages/service-${packageName}/gitlab-ci`, {
-          ecrName: toUppercaseAndUnderscore(packageName),
-        }),
+        this.templatePath('microservice/Dockerfile-development'),
+        this.destinationPath(`packages/service-${packageName}/Dockerfile-development`),
       )
 
-      this.fs.copy(
+      this.fs.copyTpl(
+        this.templatePath('microservice/Dockerrun.aws.json'),
+        this.destinationPath(`packages/service-${packageName}/Dockerrun.aws.json`),
+        {
+          serviceName: packageName,
+        },
+      )
+
+      this.fs.copyTpl(
+        this.templatePath('microservice/gitlab-ci.yml'),
+        this.destinationPath(`packages/service-${packageName}/gitlab-ci.yml`),
+        {
+          serviceName: packageName,
+          ecrName: toUppercaseAndUnderscore(packageName),
+        },
+      )
+
+      this.fs.copyTpl(
         this.templatePath('microservice/.env'),
         this.destinationPath(`packages/service-${packageName}/.env`),
+        {
+          serviceName: packageName,
+        },
       )
 
       this.fs.copyTpl(
