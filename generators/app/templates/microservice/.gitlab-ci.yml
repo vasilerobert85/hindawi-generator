@@ -1,4 +1,4 @@
-# Copy this generated service and add it to the main Docker-compose.yml file
+# Copy this generated service and add it to the main .gitlab-ci.yml file
 
 variables:
   ECR_SERVICE_<%= ecrName%>: $ECR_SERVICE_<%= ecrName%>

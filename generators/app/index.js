@@ -127,8 +127,8 @@ module.exports = class extends Generator {
       )
 
       this.fs.copyTpl(
-        this.templatePath('microservice/gitlab-ci.yml'),
-        this.destinationPath(`packages/service-${packageName}/gitlab-ci.yml`),
+        this.templatePath('microservice/.gitlab-ci.yml'),
+        this.destinationPath(`packages/service-${packageName}/.gitlab-ci.yml`),
         {
           serviceName: packageName,
           ecrName: toUppercaseAndUnderscore(packageName),
