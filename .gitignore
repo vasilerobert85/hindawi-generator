@@ -76,5 +76,7 @@ typings/
 .dynamodb/
 
 # Work in progress
-**/WorkInProgress/
+/WorkInProgress/
+
+
 .DS_Store
