@@ -5,6 +5,8 @@ const GENERATOR_TYPES = {
   microservice: 'microservice',
 }
 
+const toUppercaseAndUnderscore = packageName => packageName.toUpperCase().replace('-', '_')
+
 module.exports = class extends Generator {
   async prompting() {
     let answers
@@ -27,7 +29,8 @@ module.exports = class extends Generator {
           type: 'input',
           name: 'packageName',
           required: true,
-          message: 'What is the component name? (e.g. authentication or submission)',
+          message:
+            'What is the component name? (e.g. authentication or submission)',
         },
         {
           type: 'input',
@@ -49,13 +52,15 @@ module.exports = class extends Generator {
           type: 'input',
           name: 'description',
           required: true,
-          message: 'What is the microservice supposed to do? (e.g. service used to convert files)',
+          message:
+            'What is the microservice supposed to do? (e.g. service used to convert files)',
         },
         {
           type: 'input',
           name: 'dependencies',
           required: false,
-          message: 'Does this service depend on other services? (add comma separated values)',
+          message:
+            'Does this service depend on other services? (add comma separated values)',
           filter: values => (values ? values.split(', ') : undefined),
         },
       ])
@@ -109,8 +114,33 @@ module.exports = class extends Generator {
       )
 
       this.fs.copy(
+        this.templatePath('microservice/Dockerfile-development'),
+        this.destinationPath(`packages/service-${packageName}/Dockerfile-development`),
+      )
+
+      this.fs.copyTpl(
+        this.templatePath('microservice/Dockerrun.aws.json'),
+        this.destinationPath(`packages/service-${packageName}/Dockerrun.aws.json`),
+        {
+          serviceName: packageName,
+        },
+      )
+
+      this.fs.copyTpl(
+        this.templatePath('microservice/.gitlab-ci.yml'),
+        this.destinationPath(`packages/service-${packageName}/.gitlab-ci.yml`),
+        {
+          serviceName: packageName,
+          ecrName: toUppercaseAndUnderscore(packageName),
+        },
+      )
+
+      this.fs.copyTpl(
         this.templatePath('microservice/.env'),
         this.destinationPath(`packages/service-${packageName}/.env`),
+        {
+          serviceName: packageName,
+        },
       )
 
       this.fs.copyTpl(
@@ -125,7 +155,9 @@ module.exports = class extends Generator {
 
       this.fs.copyTpl(
         this.templatePath('microservice/Docker-compose.yml'),
-        this.destinationPath(`packages/service-${packageName}/Docker-compose.yml`),
+        this.destinationPath(
+          `packages/service-${packageName}/Docker-compose.yml`,
+        ),
         {
           dependencies,
           serviceName: packageName,
