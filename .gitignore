@@ -75,8 +75,4 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
-# Work in progress
-/WorkInProgress/
-
-
 .DS_Store
