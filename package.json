@@ -11,6 +11,7 @@
     "yeoman-generator"
   ],
   "dependencies": {
+    "@pubsweet/logger": "^0.2.25",
     "yeoman-generator": "^4.0.1"
   },
   "repository": {
