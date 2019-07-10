@@ -46,7 +46,7 @@ module.exports = class extends Generator {
           type: 'input',
           name: 'packageName',
           required: true,
-          message: 'What is the microservice name? (e.g. file conversion)',
+          message: 'What is the microservice name? (e.g. file-conversion)',
         },
         {
           type: 'input',
@@ -63,6 +63,13 @@ module.exports = class extends Generator {
             'Does this service depend on other services? (add comma separated values)',
           filter: values => (values ? values.split(', ') : undefined),
         },
+        {
+            type: 'input',
+            name: 'enviroment',
+            required: true,
+            message:
+              'What is the Elastic Beanstalk enviroment to deploy this microservice? qa or prod ? (e.g. qa)',
+          },
       ])
     }
 
@@ -71,7 +78,7 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    const { packageName, description, dependencies } = this.answers
+    const { packageName, description, dependencies, enviroment } = this.answers
     if (this.packageType === GENERATOR_TYPES.component) {
       this.fs.copy(
         this.templatePath('package/client'),
@@ -119,8 +126,8 @@ module.exports = class extends Generator {
       )
 
       this.fs.copyTpl(
-        this.templatePath('microservice/Dockerrun.aws.json'),
-        this.destinationPath(`packages/service-${packageName}/Dockerrun.aws.json`),
+        this.templatePath('microservice/AWS/Dockerrun.aws.json'),
+        this.destinationPath(`packages/service-${packageName}/AWS/Dockerrun.aws.json`),
         {
           serviceName: packageName,
         },
@@ -167,6 +174,17 @@ module.exports = class extends Generator {
       this.fs.copy(
         this.templatePath('microservice/index.js'),
         this.destinationPath(`packages/service-${packageName}/index.js`),
+      )
+
+      this.fs.copyTpl(
+        this.templatePath('microservice/AWS/EB_CLI'),
+        this.destinationPath(
+          `packages/service-${packageName}/AWS/EB_CLI`,
+      ),
+      {
+        enviromentElasticbeanstalk: enviroment,
+        serviceName: packageName,
+      },
       )
     }
   }
