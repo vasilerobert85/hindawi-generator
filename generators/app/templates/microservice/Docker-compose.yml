@@ -4,8 +4,10 @@ service-<%= serviceName%>:
   build:
     context: ./packages/service-<%= serviceName%>/
     dockerfile: ./Dockerfile-development
-  command: yarn start:dev
+  command: sh -c "yarn --no-lockfile && yarn start:dev"
   <% if (dependencies) { %>
+  ports:
+    - ${PORT:-<%= servicePort%>}:3000
   depends_on:
   <% dependencies.forEach(function(d) { %>
     - <%= d%> <% }); %>
