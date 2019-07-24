@@ -10,7 +10,6 @@ push:qa:service-<%= serviceName%>:
     ECR_URL: $ECR_SERVICE_<%= ecrName%>
     DOCKER_PATH: ./packages/service-<%= serviceName%>
   only:
-    - merge_requests
     - master
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
@@ -55,7 +54,6 @@ deploy:qa:service-<%= serviceName%>:
   image: docker:latest
   stage: deploy
   only:
-    - merge_requests
     - master
   variables:
     EB_ENV: qa-service-<%= serviceName%>
