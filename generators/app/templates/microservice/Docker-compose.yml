@@ -12,7 +12,6 @@ service-<%= serviceName%>:
   <% dependencies.forEach(function(d) { %>
     - <%= d%> <% }); %>
   <% } %>
-  env_file: ./packages/service-<%= serviceName%>/.env
   volumes:
     - ./packages/service-<%= serviceName%>:/app
     - <%= serviceName%>-node-modules:/app/node_modules
