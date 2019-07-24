@@ -70,9 +70,6 @@ deploy:qa:service-<%= serviceName%>:
     - pip install awscli --upgrade --user
     - export PATH=~/.local/bin:/usr/bin/:$PATH
     - aws elasticbeanstalk update-environment --environment-name $EB_ENV --version-label $EB_VERSION
-  after_script:
-   - git tag QA
-   - git push origin --tags
 
 deploy:production:service-<%= serviceName%>:
   image: docker:latest
@@ -95,6 +92,3 @@ deploy:production:service-<%= serviceName%>:
     - pip install awscli --upgrade --user
     - export PATH=~/.local/bin:/usr/bin/:$PATH
     - aws elasticbeanstalk update-environment --environment-name $EB_ENV --version-label $EB_VERSION
-  after_script:
-   - git tag PROD
-   - git push origin --tags
