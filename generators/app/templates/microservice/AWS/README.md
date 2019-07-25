@@ -2,7 +2,7 @@
 
 This folder contains:
  * Dockerrun.aws.json
- * EB_CLI
+ * devops_script.sh
 
  ### Dockerrun.aws.json
 
