@@ -11,6 +11,6 @@ This folder contains:
  ### devops_script.sh
 
  This script is designed to aid in common tasks:                                  
-    * ElasticBeanstalk Environment -> new environment, list/update environment variables 
-    * RDS Database creation --> PostgreSQL                                               
-    * CloudWatch log deletion 
+  * ElasticBeanstalk Environment -> new environment, list/update environment variables 
+  * RDS Database creation --> PostgreSQL                                               
+  * CloudWatch log deletion 
