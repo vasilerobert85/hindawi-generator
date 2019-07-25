@@ -1,8 +1,11 @@
 #!/bin/sh
 
-########################################################################################################
-# This script is designed to aid in common ElasticBeanstalk Environment task and RDS Database creation #
-########################################################################################################
+########################################################################################
+## This script is designed to aid in common tasks:                                    ##
+## ElasticBeanstalk Environment -> new environment, list/update environment variables ##
+## RDS Database creation --> PostgreSQL                                               ##
+## CloudWatch log deletion                                                            ##
+########################################################################################
 
 ANSIPROMPT="\033[1;31mInput-->\033[0m "
 
@@ -10,7 +13,7 @@ select_aws_profile () {
         
         echo "\nPlease enter your choice for what you would like to do:"
         echo "Press 1 -> to select the AWS profile to run the next sections"
-        echo "Press 5 -> to quit\n"
+        echo "Press 6 -> to quit\n"
 read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
         if [ "$select_aws_profile_ans" = "1" ]; then
         #list available AWS profiles
@@ -28,7 +31,8 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                 echo "Press 2 -> for listing ElasticBeanstalk Environment variables"
                 echo "Press 3 -> for uploading ElasticBeanstalk Environment variables"
                 echo "Press 4 -> for creating a new RDS Database"
-                echo "Press 5 -> to quit\n\n"
+                echo "Press 5 -> to delete a CloudWatch log"
+                echo "Press 6 -> to quit\n\n"
         read -n 1 -p $(echo "$ANSIPROMPT") mainmenuinput
                 #Should 1 be selected -> for creating a new ElasticBeanstalk Environment
                 if [ "$mainmenuinput" = "1" ]; then
@@ -37,7 +41,7 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                                 echo "Press 1 -> for new QA - Environment"
                                 echo "Press 2 -> for new PROD - Environment"
                                 echo "Press 3 -> to exit to main menu"
-                                echo "Press 5 -> to quit\n"
+                                echo "Press 6 -> to quit\n"
                         read -n 1 -p $(echo "$ANSIPROMPT") new_elasticBeanstalk_environment_ans
                         #provide the name for the new QA ElasticBeanstalk Environment
                         if [ "$new_elasticBeanstalk_environment_ans" = "1" ]; then
@@ -96,7 +100,7 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                         elif [ "$new_elasticBeanstalk_environment_ans" = "3" ]; then
                                 clear
                                 mainmenu
-                        elif [ "$new_elasticBeanstalk_environment_ans" = "5" ]; then
+                        elif [ "$new_elasticBeanstalk_environment_ans" = "6" ]; then
                                 exit 1
                         else
                                 echo "\nYou have entered an invallid selection!"
@@ -114,7 +118,7 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                                 echo "\nPlease enter your choice for what you would like to do:"
                                 echo "Press 1 -> for the available ElasticBeanstalk Environment variables"
                                 echo "Press 3 -> to exit to main menu"
-                                echo "Press 5 -> to quit\n"
+                                echo "Press 6 -> to quit\n"
                         read -n 1 -p $(echo "$ANSIPROMPT") list_elasticBeanstalk_environments_ans 
                         #list the available ElasticBeanstalk Environment variables
                         if [ "$list_elasticBeanstalk_environments_ans" = "1" ]; then
@@ -132,7 +136,7 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                         elif [ "$list_elasticBeanstalk_environments_ans" = "3" ]; then
                                 clear
                                 mainmenu
-                        elif [ "$list_elasticBeanstalk_environments_ans" = "5" ]; then
+                        elif [ "$list_elasticBeanstalk_environments_ans" = "6" ]; then
                                 exit 1
                         else
                                 echo "\nYou have entered an invallid selection!"
@@ -151,7 +155,7 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                                 echo "\nPlease enter your choice for what you would like to do:"
                                 echo "Press 1 -> to generate a list of the available ElasticBeanstalk Environments"
                                 echo "Press 3 -> to exit to main menu"
-                                echo "Press 5 -> to quit\n"
+                                echo "Press 6 -> to quit\n"
                         read -n 1 -p $(echo "$ANSIPROMPT") upload_elasticBeanstalk_environment_ans
                         #list the available ElasticBeanstalk Environment variables
                         if [ "$upload_elasticBeanstalk_environment_ans" = "1" ]; then
@@ -174,7 +178,7 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                         elif [ "$upload_elasticBeanstalk_environment_ans" = "3" ]; then
                                 clear
                                 mainmenu
-                        elif [ "$upload_elasticBeanstalk_environment_ans" = "5" ]; then
+                        elif [ "$upload_elasticBeanstalk_environment_ans" = "6" ]; then
                                 exit 1
                         else
                                 echo "\nYou have entered an invallid selection!"
@@ -193,7 +197,7 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                                 echo "Please enter your choice for what you would like to do:"
                                 echo "Press 1 -> for creating a new RDS DB"
                                 echo "Press 3 -> to exit to main menu"
-                                echo "Press 5 -> to quit\n\n"
+                                echo "Press 6 -> to quit\n\n"
                         read -n 1 -p $(echo "$ANSIPROMPT") create_rds_db_ans
                         if [ "$create_rds_db_ans" = "1" ]; then
                                 name_db_instance_identifier () {
@@ -232,7 +236,7 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                         elif [ "$create_rds_db_ans" = "3" ]; then
                                 clear
                                 mainmenu
-                        elif [ "$create_rds_db_ans" = "5" ]; then
+                        elif [ "$create_rds_db_ans" = "6" ]; then
                                 exit 1
                         else
                                 echo "\nYou have entered an invallid selection!"
@@ -245,7 +249,53 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                         fi
                         }
                         create_rds_db
+
+                #Should 5 be selected -> to delete a CloudWatch log
                 elif [ "$mainmenuinput" = "5" ]; then
+                        delete_CloudWatch_log () {
+                                echo "Please enter your choice for what you would like to do:"
+                                echo "Press 1 -> to enter the name of the CloudWatch log you wish to delete"
+                                echo "Press 3 -> to exit to main menu"
+                                echo "Press 6 -> to quit\n\n"
+                        read -n 1 -p $(echo "$ANSIPROMPT") delete_CloudWatch_log_ans
+                        if [ "$delete_CloudWatch_log_ans" = "1" ]; then
+                                delete_CloudWatch_log_name () {
+                                        echo "\nPlease enter the database instance identifier:\n"
+                                        read -p $(echo "$ANSIPROMPT") delete_CloudWatch_log_name_ans
+                                }
+                                delete_CloudWatch_log_name 
+                                COMMAND10="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/environment-health.log --profile $set_aws_profile_ans"
+                                COMMAND11="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/docker --profile $set_aws_profile_ans"
+                                COMMAND12="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/docker-events.log --profile $set_aws_profile_ans"
+                                COMMAND13="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/eb-activity.log --profile $set_aws_profile_ans"
+                                COMMAND14="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/eb-docker/containers/eb-current-app/stdouterr.log --profile $set_aws_profile_ans"
+                                COMMAND15="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/nginx/access.log --profile $set_aws_profile_ans"
+                                COMMAND16="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/nginx/error.log --profile $set_aws_profile_ans"
+                                eval $COMMAND10
+                                eval $COMMAND11
+                                eval $COMMAND12
+                                eval $COMMAND13
+                                eval $COMMAND14
+                                eval $COMMAND15
+                                eval $COMMAND16
+                        elif [ "$delete_CloudWatch_log_ans" = "3" ]; then
+                                clear
+                                mainmenu
+                        elif [ "$delete_CloudWatch_log_ans" = "6" ]; then
+                                exit 1
+                        else
+                                echo "\nYou have entered an invallid selection!"
+                                echo "Please try again!\n"
+                                echo "Press any key to continue...\n"
+                                read -n 1
+                                clear
+                                delete_CloudWatch_log
+
+                        fi
+                        }
+                        delete_CloudWatch_log
+
+                elif [ "$mainmenuinput" = "6" ]; then
                         exit 1
                 else
                         echo "\nYou have entered an invallid selection!"
@@ -257,7 +307,7 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                 fi
         }
         mainmenu
-elif [ "$select_aws_profile_ans" = "5" ]; then
+elif [ "$select_aws_profile_ans" = "6" ]; then
         exit 1
 else
         echo "\nYou have entered an invallid selection!"
