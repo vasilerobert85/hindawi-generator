@@ -46,23 +46,30 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                         #provide the name for the new QA ElasticBeanstalk Environment
                         if [ "$new_elasticBeanstalk_environment_ans" = "1" ]; then
                                 eb_env_name_qa () {
-                                        printf "\033[1;31m Dockerrun.aws.json needs first to be uploaded and referance the name below; qa-service- already appended\033[0m\n"
-                                        echo "\nPlease enter the name of the ElasticBeanstalk Environment:\n"
+                                        printf "\033[1;31m Dockerrun.aws.json needs first to be uploaded and referance the name below;\033[0m\n"
+                                        echo "\nPlease enter the name of the ElasticBeanstalk Environment--> qa-service- already appended :\n"
                                 read -p $(echo "$ANSIPROMPT") eb_env_name_qa_ans
                         # use AWS CLI to find out if the privided name is available or not
-                                        AWSCOMMAND1="aws elasticbeanstalk check-dns-availability --cname-prefix qa-service-$eb_env_name_qa_ans --profile $set_aws_profile_ans"
-                                        qa_cname_availability=$( eval $AWSCOMMAND1 | jq .Available )
+                                        cname1="aws elasticbeanstalk check-dns-availability --cname-prefix qa-service-$eb_env_name_qa_ans --profile $set_aws_profile_ans"
+                                        qa_cname_availability=$( eval $cname1 | jq .Available )
                                                 echo "\nChecking AWS CNAME availability --> $qa_cname_availability\n"
                         # use AWS CLI to create the QA Environment
                                                 if [ "$qa_cname_availability" = "true" ]; then
-                                                        AWSCOMMAND2="aws elasticbeanstalk create-environment \
+                                                        create_eb_env1="aws elasticbeanstalk create-environment \
                                                         --cname-prefix qa-service-$eb_env_name_qa_ans \
                                                         --application-name Screening \
                                                         --template-name generic-app \
                                                         --version-label qa-service-$eb_env_name_qa_ans \
                                                         --environment-name qa-service-$eb_env_name_qa_ans \
                                                         --profile $set_aws_profile_ans"
-                                                        local qa_create_environment=$(eval $AWSCOMMAND2)
+                                                        local qa_create_environment=$(eval $create_eb_env1)
+                        # create ECR Repositiory for the new service
+                                                echo "Now creating the ECR Repository for the new service"
+                                                create_repo1="aws ecr create-repository --repository-name $eb_env_name_qa_ans --profile $set_aws_profile_ans"
+                                                eval $create_repo1
+                        # set the ECR Repositiory permisions for the new service
+                                                set_repo_policy1="aws ecr set-repository-policy --repository-name $eb_env_name_qa_ans --policy-text file://repo_access.json --profile $set_aws_profile_ans"
+                                                eval $set_repo_policy1
                                                 else
                                                         echo "\nYou have entered an already existing Environment name!\n"
                                                                 clear
@@ -73,23 +80,23 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                         #provide the name for the new PROD ElasticBeanstalk Environment
                         elif [ "$new_elasticBeanstalk_environment_ans" = "2" ]; then
                                 eb_env_name_prod () {
-                                        printf "\033[1;31m Dockerrun.aws.json needs first to be uploaded and referance the name below; prod-service- already appended\033[0m\n"
-                                        echo "\n\nPlease enter the name of the ElasticBeanstalk Environment:\n\n"
+                                        printf "\033[1;31m Dockerrun.aws.json needs first to be uploaded and referance the name below\033[0m\n"
+                                        echo "\n\nPlease enter the name of the ElasticBeanstalk Environment--> prod-service- already appended :\n\n"
                                 read -p $(echo "$ANSIPROMPT") eb_env_name_prod_ans
                         # use AWS CLI to find out if the privided name is available or not
-                                        AWSCOMMAND3="aws elasticbeanstalk check-dns-availability --cname-prefix prod-service-$eb_env_name_prod_ans --profile $set_aws_profile_ans"  
-                                        prod_cname_availability=$( eval $AWSCOMMAND3 | jq .Available )
+                                        cname2="aws elasticbeanstalk check-dns-availability --cname-prefix prod-service-$eb_env_name_prod_ans --profile $set_aws_profile_ans"  
+                                        prod_cname_availability=$( eval $cname2 | jq .Available )
                                                 echo "\nChecking AWS CNAME availability --> $prod_cname_availability\n"
                         # use AWS CLI to create the PROD Environment
                                                 if [ "$prod_cname_availability" = "true" ]; then
-                                                        AWSCOMMAND4="aws elasticbeanstalk create-environment \
+                                                        create_eb_env2="aws elasticbeanstalk create-environment \
                                                         --cname-prefix prod-service-$eb_env_name_prod_ans \
                                                         --application-name Screening \
                                                         --template-name generic-app \
                                                         --version-label prod-service-$eb_env_name_prod_ans \
                                                         --environment-name prod-service-$eb_env_name_prod_ans \
                                                         --profile $set_aws_profile_ans"
-                                                        local prod_create_environment=$(eval $AWSCOMMAND4)
+                                                        local prod_create_environment=$(eval $create_eb_env2)
                                                 else
                                                         echo "\nYou have entered an already existing Environment name!\n"
                                                         clear
@@ -122,8 +129,8 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                         read -n 1 -p $(echo "$ANSIPROMPT") list_elasticBeanstalk_environments_ans 
                         #list the available ElasticBeanstalk Environment variables
                         if [ "$list_elasticBeanstalk_environments_ans" = "1" ]; then
-                                AWSCOMMAND5="eb list -av --profile $set_aws_profile_ans"
-                                eval $AWSCOMMAND5
+                                list_eb_env="eb list -av --profile $set_aws_profile_ans"
+                                eval $list_eb_env
                         #ask for the ElasticBeanstalk Environment name
                                 print_elasticBeanstalk_environments () {
                                         echo "\nPlease enter the name of the ElasticBeanstalk Environment:\n"
@@ -131,8 +138,8 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                                 }
                                 print_elasticBeanstalk_environments
                         #provide the ElasticBeanstalk Environment variables specified 
-                                AWSCOMMAND6="eb printenv $print_elasticBeanstalk_environments_ans --profile $set_aws_profile_ans"
-                                eval $AWSCOMMAND6
+                                print_eb_env="eb printenv $print_elasticBeanstalk_environments_ans --profile $set_aws_profile_ans"
+                                eval $print_eb_env
                         elif [ "$list_elasticBeanstalk_environments_ans" = "3" ]; then
                                 clear
                                 mainmenu
@@ -159,8 +166,8 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                         read -n 1 -p $(echo "$ANSIPROMPT") upload_elasticBeanstalk_environment_ans
                         #list the available ElasticBeanstalk Environment variables
                         if [ "$upload_elasticBeanstalk_environment_ans" = "1" ]; then
-                                AWSCOMMAND7="eb list -av --profile $set_aws_profile_ans"
-                                eval $AWSCOMMAND7
+                                list_eb_env2="eb list -av --profile $set_aws_profile_ans"
+                                eval $list_eb_env2
                         #ask for the ElasticBeanstalk Environment name
                                 name_elasticBeanstalk_environments () {
                                         echo "\n\n"
@@ -170,11 +177,11 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                                 }
                                 name_elasticBeanstalk_environments
                         #set the ElasticBeanstalk Environment to target
-                                AWSCOMMAND8="eb use $name_elasticBeanstalk_environments_ans --profile $set_aws_profile_ans"
-                                eval $AWSCOMMAND8
+                                eb_use="eb use $name_elasticBeanstalk_environments_ans --profile $set_aws_profile_ans"
+                                eval $eb_use
                                 echo $(cat ForUpload | sed 's/ //g') > Uploaded
-                                AWSCOMMAND9="eb setenv `cat  Uploaded` --profile $set_aws_profile_ans"
-                                eval $AWSCOMMAND9
+                                upload_eb_env="eb setenv `cat  Uploaded` --profile $set_aws_profile_ans"
+                                eval $upload_eb_env
                         elif [ "$upload_elasticBeanstalk_environment_ans" = "3" ]; then
                                 clear
                                 mainmenu
@@ -221,7 +228,7 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                                         echo $db_master_user_password_ans
                                 }
                                 name_db_master_user_password
-                                COMMAND9="aws rds create-db-instance \
+                                create_db="aws rds create-db-instance \
                                         --allocated-storage 20 \
                                         --db-instance-class db.t2.small \
                                         --db-instance-identifier $name_db_instance_identifier_ans \
@@ -238,7 +245,7 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                                         --no-deletion-protection \
                                         --performance-insights-retention-period 7 \
                                         --profile $set_aws_profile_ans"
-                                eval $COMMAND9
+                                eval $create_db
                         elif [ "$create_rds_db_ans" = "3" ]; then
                                 clear
                                 mainmenu
@@ -270,20 +277,20 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                                         read -p $(echo "$ANSIPROMPT") delete_CloudWatch_log_name_ans
                                 }
                                 delete_CloudWatch_log_name 
-                                COMMAND10="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/environment-health.log --profile $set_aws_profile_ans"
-                                COMMAND11="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/docker --profile $set_aws_profile_ans"
-                                COMMAND12="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/docker-events.log --profile $set_aws_profile_ans"
-                                COMMAND13="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/eb-activity.log --profile $set_aws_profile_ans"
-                                COMMAND14="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/eb-docker/containers/eb-current-app/stdouterr.log --profile $set_aws_profile_ans"
-                                COMMAND15="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/nginx/access.log --profile $set_aws_profile_ans"
-                                COMMAND16="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/nginx/error.log --profile $set_aws_profile_ans"
-                                eval $COMMAND10
-                                eval $COMMAND11
-                                eval $COMMAND12
-                                eval $COMMAND13
-                                eval $COMMAND14
-                                eval $COMMAND15
-                                eval $COMMAND16
+                                delete_logs_1="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/environment-health.log --profile $set_aws_profile_ans"
+                                delete_logs_2="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/docker --profile $set_aws_profile_ans"
+                                delete_logs_3="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/docker-events.log --profile $set_aws_profile_ans"
+                                delete_logs_4="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/eb-activity.log --profile $set_aws_profile_ans"
+                                delete_logs_5="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/eb-docker/containers/eb-current-app/stdouterr.log --profile $set_aws_profile_ans"
+                                delete_logs_6="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/nginx/access.log --profile $set_aws_profile_ans"
+                                delete_logs_7="aws logs delete-log-group --log-group-name /aws/elasticbeanstalk/$delete_CloudWatch_log_name_ans/var/log/nginx/error.log --profile $set_aws_profile_ans"
+                                eval $delete_logs_1
+                                eval $delete_logs_2
+                                eval $delete_logs_3
+                                eval $delete_logs_4
+                                eval $delete_logs_5
+                                eval $delete_logs_6
+                                eval $delete_logs_7
                         elif [ "$delete_CloudWatch_log_ans" = "3" ]; then
                                 clear
                                 mainmenu
