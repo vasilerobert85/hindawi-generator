@@ -170,10 +170,10 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                                 }
                                 name_elasticBeanstalk_environments
                         #set the ElasticBeanstalk Environment to target
-                                AWSCOMMAND8="eb use $name_elasticBeanstalk_environments_ans"
+                                AWSCOMMAND8="eb use $name_elasticBeanstalk_environments_ans --profile $set_aws_profile_ans"
                                 eval $AWSCOMMAND8
                                 echo $(cat ForUpload | sed 's/ //g') > Uploaded
-                                AWSCOMMAND9="eb setenv `cat  Uploaded`"
+                                AWSCOMMAND9="eb setenv `cat  Uploaded` --profile $set_aws_profile_ans"
                                 eval $AWSCOMMAND9
                         elif [ "$upload_elasticBeanstalk_environment_ans" = "3" ]; then
                                 clear
@@ -201,12 +201,17 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                         read -n 1 -p $(echo "$ANSIPROMPT") create_rds_db_ans
                         if [ "$create_rds_db_ans" = "1" ]; then
                                 name_db_instance_identifier () {
-                                        echo "\nPlease enter the database instance identifier:\n"
+                                        echo "\nPlease enter the database instance identifier (my-db):\n"
                                         read -p $(echo "$ANSIPROMPT") name_db_instance_identifier_ans
                                 }
-                                name_db_instance_identifier 
+                                name_db_instance_identifier
+                                name_db_name() {
+                                        echo "\nPlease enter the database name (my_db):\n"
+                                        read -p $(echo "$ANSIPROMPT") name_db_name_ans
+                                }
+                                name_db_name
                                 name_db_master_username () {
-                                        echo "\nPlease enter the database master username:\n"
+                                        echo "\nPlease enter the database master username (db_user):\n"
                                         read -p $(echo "$ANSIPROMPT") db_master_username_ans
                                 }
                                 name_db_master_username
@@ -220,10 +225,11 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                                         --allocated-storage 20 \
                                         --db-instance-class db.t2.small \
                                         --db-instance-identifier $name_db_instance_identifier_ans \
-                                        --engine postgres \
-                                        --engine-version 10.9 \
                                         --master-username $db_master_username_ans \
                                         --master-user-password $db_master_user_password_ans \
+                                        --db-name $name_db_name_ans \
+                                        --engine postgres \
+                                        --engine-version 10.9 \
                                         --preferred-maintenance-window sat:02:00-sat:02:30 \
                                         --copy-tags-to-snapshot \
                                         --monitoring-interval 60 \
