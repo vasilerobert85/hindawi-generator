@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { graphql } from 'react-apollo'
+import { graphql } from '@apollo/react-hoc'
 import { compose } from 'recompose'
 
 import * as mutations from './mutations'
