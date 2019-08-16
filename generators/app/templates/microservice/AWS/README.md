@@ -2,13 +2,15 @@
 
 This folder contains:
  * Dockerrun.aws.json
- * EB_CLI
+ * devops_script.sh
 
  ### Dockerrun.aws.json
 
  This file needs to be uploaded to Elastic Beanstalk application version imediatly after the yo generator is used to create this microservice
 
- ### EB_CLI
+ ### devops_script.sh
 
- Use `aws elasticbeanstalk create-environment` command to create the enviroment for the microservice
- When all development for the microservice is done the enviroment should by green.
+ This script is designed to aid in common tasks:                                  
+  * ElasticBeanstalk Environment -> new environment, list/update environment variables 
+  * RDS Database creation --> PostgreSQL                                               
+  * CloudWatch log deletion 

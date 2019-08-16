@@ -2,7 +2,7 @@
 
 variables:
   ECR_SERVICE_<%= ecrName%>: $ECR_SERVICE_<%= ecrName%>
-
+  PROD_ECR_SERVICE_<%= ecrName%>: $PROD_ECR_SERVICE_<%= ecrName%>
 push:qa:service-<%= serviceName%>:
   image: docker:latest
   stage: push
@@ -15,8 +15,8 @@ push:qa:service-<%= serviceName%>:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker build -t $ECR_URL:$CI_COMMIT_SHA $DOCKER_PATH
     - export AWS_DEFAULT_REGION=$AWS_REGION
-    - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-    - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+    - export AWS_ACCESS_KEY_ID=$SANDBOX_ECR_KEY_ID
+    - export AWS_SECRET_ACCESS_KEY=$SANDBOX_ECR_ACCESS_KEY
     - apk update
     - apk --no-cache add --update curl python python-dev py-pip
     - pip install awscli --upgrade --user
@@ -31,7 +31,7 @@ push:production:service-<%= serviceName%>:
   stage: push
   when: manual
   variables:
-    ECR_URL: $ECR_SERVICE_<%= ecrName%>
+    ECR_URL: $PROD_ECR_SERVICE_<%= ecrName%>
     DOCKER_PATH: ./packages/service-<%= serviceName%>
   only:
     - master
@@ -39,8 +39,8 @@ push:production:service-<%= serviceName%>:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker build -t $ECR_URL:$CI_COMMIT_SHA $DOCKER_PATH
     - export AWS_DEFAULT_REGION=$AWS_REGION
-    - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-    - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+    - export AWS_ACCESS_KEY_ID=$EB_KEY_ID
+    - export AWS_SECRET_ACCESS_KEY=$EB_ACCESS_KEY
     - apk update
     - apk --no-cache add --update curl python python-dev py-pip
     - pip install awscli --upgrade --user
@@ -63,8 +63,8 @@ deploy:qa:service-<%= serviceName%>:
     name: qa
   script:
     - export AWS_DEFAULT_REGION=$AWS_REGION
-    - export AWS_ACCESS_KEY_ID=$EB_AWS_ACCESS
-    - export AWS_SECRET_ACCESS_KEY=$EB_AWS_SECRET
+    - export AWS_ACCESS_KEY_ID=$EB_KEY_ID
+    - export AWS_SECRET_ACCESS_KEY=$EB_ACCESS_KEY
     - apk update
     - apk --no-cache add --update curl python python-dev py-pip
     - pip install awscli --upgrade --user
@@ -85,8 +85,8 @@ deploy:production:service-<%= serviceName%>:
     name: production
   script:
     - export AWS_DEFAULT_REGION=$AWS_REGION
-    - export AWS_ACCESS_KEY_ID=$EB_AWS_ACCESS
-    - export AWS_SECRET_ACCESS_KEY=$EB_AWS_SECRET
+    - export AWS_ACCESS_KEY_ID=$EB_KEY_ID
+    - export AWS_SECRET_ACCESS_KEY=$EB_ACCESS_KEY
     - apk update
     - apk --no-cache add --update curl python python-dev py-pip
     - pip install awscli --upgrade --user
