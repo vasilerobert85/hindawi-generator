@@ -14,12 +14,14 @@
     "path": "packages/component-<%= componentName %>"
   },
   "dependencies": {
+    "@apollo/react-common": "^3.0.1",
+    "@apollo/react-hoc": "^3.0.1",
+    "@apollo/react-hooks": "^3.0.1",
     "@pubsweet/ui": "^10.3.0",
     "@pubsweet/ui-toolkit": "^2.2.0",
     "graphql-tag": "^2.10.1",
     "pubsweet-server": "^13.4.2",
     "react": "^16.8.6",
-    "react-apollo": "^2.5.6",
     "react-dom": "^16.8.6",
     "recompose": "^0.30.0",
     "styled-components": "^4.2.1"
