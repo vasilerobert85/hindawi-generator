@@ -1,11 +1,14 @@
 #!/bin/sh
 
-########################################################################################
-## This script is designed to aid in common tasks:                                    ##
-## ElasticBeanstalk Environment -> new environment, list/update environment variables ##
-## RDS Database creation --> PostgreSQL                                               ##
-## CloudWatch log deletion                                                            ##
-########################################################################################
+#################################################################################################################################
+## This script is designed to aid in common tasks:                                                                             ##
+##                                                                                                                             ##
+## ElasticBeanstalk Environment -> new environment with ECR Repositiory for the new service, list/update environment variables ##
+##                                                                                                                             ##
+## RDS Database creation --> PostgreSQL                                                                                        ##
+##                                                                                                                             ##
+## CloudWatch log deletion                                                                                                     ##
+#################################################################################################################################
 
 ANSIPROMPT="\033[1;31mInput-->\033[0m "
 
