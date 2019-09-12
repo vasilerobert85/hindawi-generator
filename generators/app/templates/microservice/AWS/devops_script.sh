@@ -205,7 +205,8 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                 elif [ "$mainmenuinput" = "4" ]; then
                         create_rds_db () {
                                 echo "Please enter your choice for what you would like to do:"
-                                echo "Press 1 -> for creating a new RDS DB"
+                                echo "Press 1 -> for creating a new Sandbox RDS DB"
+                                echo "Press 2 -> for creating a new PROD RDS DB"
                                 echo "Press 3 -> to exit to main menu"
                                 echo "Press 6 -> to quit\n\n"
                         read -n 1 -p $(echo "$ANSIPROMPT") create_rds_db_ans
@@ -249,6 +250,46 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                                         --performance-insights-retention-period 7 \
                                         --profile $set_aws_profile_ans"
                                 eval $create_db
+                        elif [ "$create_rds_db_ans" = "2" ]; then
+                                name_db_instance_identifier () {
+                                        echo "\nPlease enter the database instance identifier (my-db):\n"
+                                        read -p $(echo "$ANSIPROMPT") name_db_instance_identifier_ans
+                                }
+                                name_db_instance_identifier
+                                name_db_name() {
+                                        echo "\nPlease enter the database name (my_db):\n"
+                                        read -p $(echo "$ANSIPROMPT") name_db_name_ans
+                                }
+                                name_db_name
+                                name_db_master_username () {
+                                        echo "\nPlease enter the database master username (db_user):\n"
+                                        read -p $(echo "$ANSIPROMPT") db_master_username_ans
+                                }
+                                name_db_master_username
+                                name_db_master_user_password () {
+                                        echo "\nPlease enter the database master user password:\n"
+                                        read -p $(echo "$ANSIPROMPT") db_master_user_password_ans
+                                        echo $db_master_user_password_ans
+                                }
+                                name_db_master_user_password
+                                create_db_prod="aws rds create-db-instance \
+                                        --allocated-storage 20 \
+                                        --db-instance-class db.t2.small \
+                                        --db-instance-identifier $name_db_instance_identifier_ans \
+                                        --master-username $db_master_username_ans \
+                                        --master-user-password $db_master_user_password_ans \
+                                        --db-name $name_db_name_ans \
+                                        --engine postgres \
+                                        --engine-version 10.9 \
+                                        --preferred-maintenance-window sat:02:00-sat:02:30 \
+                                        --copy-tags-to-snapshot \
+                                        --monitoring-interval 60 \
+                                        --monitoring-role-arn arn:aws:iam::918602980697:role/rds-monitoring-role \
+                                        --enable-performance-insights \
+                                        --no-deletion-protection \
+                                        --performance-insights-retention-period 7 \
+                                        --profile $set_aws_profile_ans"
+                                eval $create_db_prod
                         elif [ "$create_rds_db_ans" = "3" ]; then
                                 clear
                                 mainmenu
