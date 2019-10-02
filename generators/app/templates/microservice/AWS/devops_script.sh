@@ -311,13 +311,13 @@ read -n 1 -p $(echo "$ANSIPROMPT") select_aws_profile_ans
                 elif [ "$mainmenuinput" = "5" ]; then
                         delete_CloudWatch_log () {
                                 echo "Please enter your choice for what you would like to do:"
-                                echo "Press 1 -> to enter the name of the CloudWatch log you wish to delete"
+                                echo "Press 1 -> for deleting CloudWatch application logs"
                                 echo "Press 3 -> to exit to main menu"
                                 echo "Press 6 -> to quit\n\n"
                         read -n 1 -p $(echo "$ANSIPROMPT") delete_CloudWatch_log_ans
                         if [ "$delete_CloudWatch_log_ans" = "1" ]; then
                                 delete_CloudWatch_log_name () {
-                                        echo "\nPlease enter the database instance identifier:\n"
+                                        echo "\nPlease enter the application name:\n"
                                         read -p $(echo "$ANSIPROMPT") delete_CloudWatch_log_name_ans
                                 }
                                 delete_CloudWatch_log_name 
